@@ -1,0 +1,88 @@
+:root, body, #root {
+    height: 100%;
+}
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+#root {
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1 0 auto;
+}
+header {
+    background: linear-gradient(135deg, #004080, #00264d);
+    color: white;
+    text-align: center;
+    padding: 3em 1em;
+}
+header h1 {
+    font-size: 2.5em;
+    margin: 0.2em 0;
+}
+header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+footer {
+    text-align: center;
+    padding: 1.5em 0;
+    background: #00264d;
+    color: white;
+    font-size: 0.9em;
+}
+footer a {
+    color: white;
+    flex-shrink: 1;
+}
+.content {
+    padding: 1em;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.year, .year select {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.stats-grid {
+  padding: 1em;
+  display: grid;
+  align-items: start;
+  column-gap: 0.5em;
+  grid-template-columns: repeat(3, auto 1fr);
+  margin: 0 auto;
+}
+
+.stats-grid .stat {
+  justify-self: end;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.stats-grid .label {
+  justify-self: start;
+  color: #444444;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+@media (max-width: 1600px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, auto 1fr);
+  }
+}
+
+@media (max-width: 1000px) {
+  .stats-grid {
+    grid-template-columns: auto 1fr;
+  }
+}
+
