@@ -131,12 +131,11 @@
                   "NODE_ENV=production"
                   "PORT=${toString cfg.port}"
                   "FEED_URL_FILE=%d/feed-url-file"
-                  "FEED_PATH=/var/lib/bruenigs/feed.xml"
+                  "STATE_DIRECTORY=/var/lib/bruenigs"
                 ];
                 DynamicUser = true;
                 StateDirectory = "bruenigs";
                 Restart = "always";
-                PrivateTmp = false;
               };
               after = [
                 "network-online.target"
