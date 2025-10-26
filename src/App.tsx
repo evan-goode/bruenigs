@@ -276,41 +276,7 @@ const yearFilter = function(year: number) {
   }
 }
 
-const Dashboard = function({ episodes }: { episodes: Episode[] }) {
-  const yearsSet = new Set<number>();
-  for (const episode of episodes) {
-    yearsSet.add(episode.date.getFullYear());
-  }
-  const years = [...yearsSet].toSorted((a, b) => b - a);
-
-  const params = new URLSearchParams(window.location.search);
-
-  const [year, setYear] = useState<string>(params.get("year") || years[0]!.toString());
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newYear = event.target.value;
-    const url = new URL(window.location.href);
-    url.searchParams.set("year", newYear);
-    window.history.replaceState({}, "", url);
-    setYear(newYear);
-  };
-
-  const yearEpisodes = episodes.filter(yearFilter(parseInt(year)));
-
-  return (
-    <div>
-      <div className="year">
-        <span>Select year: </span>
-        <select value={year} onChange={handleChange}>
-          {[...years].map(year => <option value={year} key={year}>{year}</option>)}
-        </select>
-      </div>
-      {yearEpisodes.length &&
-        <YearMetrics episodes={yearEpisodes} /> || <p>No episodes for {year}.</p>}
-    </div >
-  );
-}
-
-export function App() {
+const Loader = function() {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -358,12 +324,50 @@ export function App() {
   }, []);
 
   if (loading) {
-    return <div>Loading</div>;
+    return <div>Loading...</div>;
   }
   if (error) {
     return <div>Error: {error}</div>;
   }
 
+  return <Dashboard episodes={episodes} />
+}
+
+const Dashboard = function({ episodes }: { episodes: Episode[] }) {
+  const yearsSet = new Set<number>();
+  for (const episode of episodes) {
+    yearsSet.add(episode.date.getFullYear());
+  }
+  const years = [...yearsSet].toSorted((a, b) => b - a);
+
+  const params = new URLSearchParams(window.location.search);
+
+  const [year, setYear] = useState<string>(params.get("year") || years[0]!.toString());
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newYear = event.target.value;
+    const url = new URL(window.location.href);
+    url.searchParams.set("year", newYear);
+    window.history.replaceState({}, "", url);
+    setYear(newYear);
+  };
+
+  const yearEpisodes = episodes.filter(yearFilter(parseInt(year)));
+
+  return (
+    <div>
+      <div className="year">
+        <span>Select year: </span>
+        <select value={year} onChange={handleChange}>
+          {[...years].map(year => <option value={year} key={year}>{year}</option>)}
+        </select>
+      </div>
+      {yearEpisodes.length &&
+        <YearMetrics episodes={yearEpisodes} /> || <p>No episodes for {year}.</p>}
+    </div >
+  );
+}
+
+export function App() {
   return (
     <>
       <main>
@@ -372,7 +376,7 @@ export function App() {
           <p>Your source for transparent podtent metrics</p>
         </header>
         <div className="content">
-          <Dashboard episodes={episodes} />
+          <Loader />
           <h3>Discriminating quota-eligible podtent from bonus podtent</h3>
           <p>A quota-eligible episode must meet ALL of the following criteria:</p>
           <ol>
