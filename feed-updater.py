@@ -75,7 +75,7 @@ def main():
                 eprint(f"episode {guid} \"{title}\" missing duration, fetching MP3 file")
                 response = requests.get(url, stream=True)
                 response.raise_for_status()
-                with tempfile.NamedTemporaryFile(suffix=".mp3") as tmp_file:
+                with tempfile.NamedTemporaryFile(suffix=".mp3", dir="/var/tmp") as tmp_file:
                     for chunk in response.iter_content(chunk_size=8192):
                         tmp_file.write(chunk)
                     tmp_file.flush()
