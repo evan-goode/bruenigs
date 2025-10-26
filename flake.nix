@@ -136,6 +136,7 @@
                 DynamicUser = true;
                 StateDirectory = "bruenigs";
                 Restart = "always";
+                PrivateTmp = false;
               };
               after = [
                 "network-online.target"
