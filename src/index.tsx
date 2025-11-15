@@ -18,7 +18,7 @@ const update = async function() {
   } catch (err) {
     console.error(`feed-updater failed: ${err}`);
   }
-  setTimeout(update, 15 * 60 * 1000);
+  setTimeout(update, 60 * 60 * 1000);
 }
 update();
 

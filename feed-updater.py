@@ -8,11 +8,15 @@ import tempfile
 
 from mutagen.mp3 import MP3
 from xml.etree import ElementTree as ET
-import requests
+import curl_cffi
 import xmlschema
 
 FEED_URL = sys.argv[1]
 OUTPUT_PATH = sys.argv[2]
+
+BROWSER = "chrome"
+PROXIES = {}
+# PROXIES = {"https": "socks://localhost:9090"}
 
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
@@ -39,7 +43,7 @@ def main():
         pass
 
     # Fetch feed URL
-    input_xml_data = requests.get(FEED_URL).content
+    input_xml_data = curl_cffi.get(FEED_URL, proxies=PROXIES).content
     eprint(f"fetched input feed")
 
     # Parse safely
@@ -73,11 +77,11 @@ def main():
                 duration_str = existing_durations[guid]
             else:
                 eprint(f"episode {guid} \"{title}\" missing duration, fetching MP3 file")
-                response = requests.get(url, stream=True)
-                response.raise_for_status()
                 with tempfile.NamedTemporaryFile(suffix=".mp3", dir=os.getcwd()) as tmp_file:
-                    for chunk in response.iter_content(chunk_size=8192):
+                    def callback(chunk):
                         tmp_file.write(chunk)
+                    response = curl_cffi.get(url, impersonate=BROWSER, proxies=PROXIES, content_callback=callback)
+                    response.raise_for_status()
                     tmp_file.flush()
 
                     audio = MP3(tmp_file.name)

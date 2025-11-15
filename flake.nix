@@ -42,8 +42,8 @@
         pkgs.python3.withPackages (
           ps: with ps; [
             xmlschema
-            requests
             mutagen
+            curl-cffi
           ]
         );
     in
