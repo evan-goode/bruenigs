@@ -1,4 +1,5 @@
 const bonusTitles = new Set([
+    "Matt Debates Bryan Caplan on Poverty",
     "BONUS CONTENT: Matt talks with Unlearning Economics",
     "Bonus Content: Matt Discusses Kamala Harris's Policies on Radio Show",
     "Bonus Content: Matt Talks NBA Unfair Labor Practice, Chris Paul on Lefty Specialists",
