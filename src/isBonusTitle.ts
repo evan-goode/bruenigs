@@ -34,6 +34,7 @@ const bonusTitles = new Set([
     "Guest Marshall Steinbaum On Recent Developments in Tax Credit Discourse",
     "Spooky Halloween Bonus Cast (Solo Liz)",
     "Bonus for Patrons: The Midterms",
+    "Liz Talks to Emmett Rensin",
 ]);
 
 const bonusRegex = new RegExp([
