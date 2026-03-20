@@ -1,10 +1,10 @@
 {
   pkgs,
-  mkBunDerivation,
+  bun2nix,
   feed-updater,
   ...
 }:
-mkBunDerivation rec {
+bun2nix.mkDerivation rec {
   pname = "bruenigs";
   version = "0.1.0";
 
@@ -14,9 +14,13 @@ mkBunDerivation rec {
 
   src = ./.;
 
-  bunNix = ./bun.nix;
+  bunDeps = bun2nix.fetchBunDeps {
+    bunNix = ./bun.nix;
+  };
 
-  index = "src/index.tsx";
+  module = "src/index.tsx";
+
+  bunInstallFlags = [ "--linker=hoisted" ];
 
   postInstall = ''
     wrapProgram $out/bin/${pname} \

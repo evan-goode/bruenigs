@@ -2,10 +2,10 @@
   description = "Bun2Nix react sample";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
     systems.url = "github:nix-systems/default";
 
-    bun2nix.url = "github:baileyluTCD/bun2nix?tag=1.5.2";
+    bun2nix.url = "github:nix-community/bun2nix";
     bun2nix.inputs.nixpkgs.follows = "nixpkgs";
     bun2nix.inputs.systems.follows = "systems";
   };
@@ -14,11 +14,11 @@
   nixConfig = {
     extra-substituters = [
       "https://cache.nixos.org"
-      "https://cache.garnix.io"
+      "https://nix-community.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
 
@@ -71,7 +71,7 @@
             '';
           };
         default = pkgsFor.${system}.callPackage ./default.nix {
-          inherit (bun2nix.lib.${system}) mkBunDerivation;
+          bun2nix = bun2nix.packages.${system}.default;
           inherit feed-updater;
           pkgs = pkgsFor.${system};
         };
