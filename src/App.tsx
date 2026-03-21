@@ -64,7 +64,11 @@ const durationToHours = function(duration: string) {
 }
 
 const hoursToDuration = function(hours: number): string {
-  const totalSeconds = Math.floor(hours * 3600);
+  return secondsToDuration(Math.floor(hours * 3600));
+};
+
+const secondsToDuration = function(seconds: number): string {
+  const totalSeconds = Math.floor(seconds);
 
   const h = Math.floor(totalSeconds / 3600);
   const m = Math.floor((totalSeconds % 3600) / 60);
@@ -75,7 +79,7 @@ const hoursToDuration = function(hours: number): string {
   const ss = !isNaN(s) && isFinite(s) ? s.toString().padStart(2, "0") : "--";
 
   return `${hh}:${mm}:${ss}`;
-};
+}
 
 const episodesToSeries = function(episodes: Episode[]) {
   let totalHours = 0;
@@ -296,7 +300,11 @@ const Loader = function() {
         for (const item of items) {
           const title = item.querySelector(":scope > title")!.textContent;
           const date = new Date(item.querySelector(":scope > pubDate")!.textContent);
-          const duration = Array.from(item.children).find(el => el.localName === "duration")!.textContent;
+          let duration = Array.from(item.children).find(el => el.localName === "duration")!.textContent;
+          if (!duration.includes(":")) {
+            duration = secondsToDuration(parseInt(duration));
+          }
+
           const hours = durationToHours(duration);
           const link = item.querySelector(":scope > link")!.textContent;
           const guid = item.querySelector(":scope > guid")!.textContent;
