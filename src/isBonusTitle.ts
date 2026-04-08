@@ -35,6 +35,7 @@ const bonusTitles = new Set([
     "Spooky Halloween Bonus Cast (Solo Liz)",
     "Bonus for Patrons: The Midterms",
     "Liz Talks to Emmett Rensin",
+    "Liz Solo Episode Q&A",
 ]);
 
 const bonusRegex = new RegExp([
