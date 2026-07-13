@@ -36,6 +36,7 @@ const bonusTitles = new Set([
     "Bonus for Patrons: The Midterms",
     "Liz Talks to Emmett Rensin",
     "Liz Solo Episode Q&A",
+    "The Friend Returns",
 ]);
 
 const bonusRegex = new RegExp([
