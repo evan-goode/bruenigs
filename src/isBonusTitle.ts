@@ -1,4 +1,5 @@
 const bonusTitles = new Set([
+    "Liz Guest Ep With Emmett Rensin",
     "Matt on the Valley Labor Report About AI SWF and Union Busting Website",
     "Matt on the DumbZone Talking NFL's Crowd Noise Problem",
     "Matt on the DumbZone Subathon",
