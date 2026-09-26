@@ -1,4 +1,5 @@
 const bonusTitles = new Set([
+    "Matt on We Can Do Better",
     "Matt on the Festival podcast with Pete Davis Talking Medicare for All",
     "Liz Guest Ep With Emmett Rensin",
     "Matt on the Valley Labor Report About AI SWF and Union Busting Website",
@@ -44,6 +45,7 @@ const bonusTitles = new Set([
 
 const bonusRegex = new RegExp([
     /^Socialism Series Episode .+/,
+    /^Bonus Podtent: .+/,
 ].map(r => r.source).join("|"), "i");
 
 export default (title: string) => {
